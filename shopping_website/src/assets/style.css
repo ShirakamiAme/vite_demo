@@ -1,0 +1,138 @@
+:root {
+    --color1: rgb(226,237,226);
+    --color2: rgb(210,221,148);
+    --color3: rgb(171,192,92);
+    --color4: rgb(93,121,34);
+    --color5: rgb(74,107,25);
+    --shadow: 0 5px 15px rgba(0,0,0,0.08);
+    --transition: all 0.3s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Noto Sans SC', sans-serif;
+    background-color: var(--color1);
+    color: var(--color5);
+    line-height: 1.6;
+}
+
+h1, h2, h3 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.feathered-edge {
+    position: relative;
+    overflow: hidden;
+}
+
+.feathered-edge::before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    background: inherit;
+    filter: blur(10px);
+    z-index: -1;
+}
+
+.btn {
+    display: inline-block;
+    background: var(--color4);
+    color: white;
+    padding: 14px 32px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: var(--transition);
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    box-shadow: var(--shadow);
+}
+
+.btn:hover {
+    background: var(--color5);
+    transform: translateY(-5px);
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative;
+    font-size: 32px;
+}
+
+.section-title::after {
+    content: "";
+    display: block;
+    width: 80px;
+    height: 4px;
+    background: var(--color3);
+    margin: 15px auto;
+    border-radius: 2px;
+}
+
+@media (max-width: 992px) {
+    .hero-content {
+        width: 60%;
+    }
+
+    .hero h1 {
+        font-size: 36px;
+    }
+}
+
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .search-bar {
+        width: 100%;
+    }
+
+    .hero {
+        height: 400px;
+    }
+
+    .hero-content {
+        width: 80%;
+        left: 30px;
+    }
+
+    .hero h1 {
+        font-size: 28px;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero {
+        height: 350px;
+    }
+
+    .hero-content {
+        width: 90%;
+        left: 20px;
+    }
+
+    .section-title {
+        font-size: 28px;
+    }
+}
