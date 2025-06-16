@@ -42,7 +42,7 @@
         </div>
       </div>
       <div class="copyright">
-        <p>绿意生活 - 自然健康购物平台 | Copyright © 2025 - 20xx 呃呃呃 版权所有</p>
+        <p>Github <a href="http://gitub.com/ShirakamiAme" style="color: #dddddd; text-decoration: none; ">@ShirakamiAme</a>  and  <a href="https://github.com/math24-ai" style="color: #dddddd; text-decoration: none; ">@math24-ai</a> , All Rights Reserved.</p>
       </div>
     </div>
   </footer>
