@@ -1,23 +1,19 @@
 <template>
   <SiteHeader />
-  <CategoriesNav />
-  <div class="container">
-    <HeroBanner />
-    <FeaturedCategories />
-    <FeaturedProducts />
-    <PromoBanner />
-  </div>
-  <SiteFooter />
+  <CategoriesNav v-if="route.path === '/' || route.path === '/products'" />
+  <main class="container">
+    <router-view />
+  </main>
+  <SiteFooter v-if="route.path !== '/login'"/>
 </template>
 
 <script setup>
-import SiteHeader from './components/SiteHeader.vue'
-import CategoriesNav from './components/CategoriesNav.vue'
-import HeroBanner from './components/HeroBanner.vue'
-import FeaturedCategories from './components/FeaturedCategories.vue'
-import FeaturedProducts from './components/FeaturedProducts.vue'
-import PromoBanner from './components/PromoBanner.vue'
-import SiteFooter from './components/SiteFooter.vue'
+import { useRoute } from 'vue-router'
+import SiteHeader from '@/components/layout/SiteHeader.vue'
+import SiteFooter from '@/components/layout/SiteFooter.vue'
+import CategoriesNav from "@/components/layout/CategoriesNav.vue"
+
+const route = useRoute()
 </script>
 
 <style scoped>

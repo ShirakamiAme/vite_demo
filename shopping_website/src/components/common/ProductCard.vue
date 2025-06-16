@@ -1,9 +1,20 @@
 <template>
   <div class="product-card">
-    <div class="product-badge" v-if="product.badge">{{ product.badge }}</div>
-    <div class="product-img" :style="{ backgroundImage: `url(${product.image})` }"></div>
+    <div
+        class="product-badge"
+        v-if="product.discount > 0"
+    >
+      -{{ Math.round(product.discount * 100) }}%
+    </div>
+
+    <div
+        class="product-img"
+        :style="{ backgroundImage: `url(${product.image})` }"
+    ></div>
+
     <div class="product-info">
       <h3>{{ product.name }}</h3>
+
       <div class="product-rating">
         <font-awesome-icon
             v-for="i in 5"
@@ -11,13 +22,18 @@
             :icon="getStarIcon(i)"
             :class="{ 'half-star': i === Math.ceil(product.rating) && product.rating % 1 !== 0 }"
         />
-        <span>({{ product.reviews }})</span>
       </div>
-      <div class="product-price" v-if="product.discountPrice">
-        <span class="original-price">{{ product.originalPrice }}</span>
-        <span class="discount-price">{{ product.discountPrice }}</span>
+
+      <div class="product-price" v-if="product.discount > 0">
+        <span class="original-price">${{ product.original_price }}</span>
+        <span class="discount-price">
+          ${{ calculateDiscountPrice(product.original_price, product.discount) }}
+        </span>
       </div>
-      <div class="normal-price" v-else>{{ product.price }}</div>
+      <div class="normal-price" v-else>
+        ${{ product.original_price }}
+      </div>
+
       <div class="add-to-cart">
         <div class="quantity">
           <button @click="decrement">-</button>
@@ -28,12 +44,17 @@
           <font-awesome-icon :icon="['fas', 'shopping-cart']" />
         </button>
       </div>
+
+      <div class="stock-info">
+        Stock: {{ product.stock }}
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
+import axios from '@/api/axios'
 
 const props = defineProps({
   product: {
@@ -44,6 +65,10 @@ const props = defineProps({
 
 const quantity = ref(1)
 const emit = defineEmits(['add-to-cart'])
+
+function calculateDiscountPrice(originalPrice, discount) {
+  return (originalPrice * (1 - discount)).toFixed(2)
+}
 
 function getStarIcon(index) {
   const rating = props.product.rating;
@@ -58,22 +83,82 @@ function getStarIcon(index) {
 }
 
 function increment() {
-  if (quantity.value < 10) quantity.value++
+  if (quantity.value < Math.min(10, props.product.stock)) {
+    quantity.value++
+  }
 }
 
 function decrement() {
   if (quantity.value > 1) quantity.value--
 }
 
-function addToCart() {
-  emit('add-to-cart', {
-    ...props.product,
-    quantity: quantity.value
-  })
+async function addToCart() {
+  try {
+    const userJson = localStorage.getItem('user')
+    if (!userJson) {
+      alert('请先登录后再添加商品到购物车')
+      return
+    }
+
+    const user = JSON.parse(userJson)
+    if (!user || !user.user_name) {
+      alert('用户信息无效，请重新登录')
+      return
+    }
+
+    const userRes = await axios.get('/users')
+    const foundUser = userRes.data.data.find(u => u.user_name === user.user_name)
+
+    if (!foundUser) {
+      alert('未找到该用户，请重新登录')
+      return
+    }
+
+    const userId = foundUser.user_id
+
+    const actualPrice = props.product.discount > 0
+        ? parseFloat(calculateDiscountPrice(props.product.original_price, props.product.discount))
+        : parseFloat(props.product.original_price)
+
+    // 修复字段名以匹配后端API要求
+    const cartItem = {
+      cart_user_id: userId, // 后端要求 cart_user_id 而非 user_id
+      product_id: props.product.id, // 确保使用正确的产品ID字段
+      quantity: quantity.value,
+      price_at_add: actualPrice
+    }
+
+    // 添加调试信息
+    console.log('发送到后端的购物车数据:', cartItem)
+
+    const response = await axios.post('/cart', cartItem)
+
+    if (response.data.status === 'success') {
+      emit('add-to-cart', {
+        ...props.product,
+        quantity: quantity.value,
+        actualPrice
+      })
+
+      alert('商品已成功添加到购物车！')
+    } else {
+      throw new Error(response.data.message || '未知错误')
+    }
+  } catch (error) {
+    console.error('添加到购物车失败:', error)
+    console.error('错误详情:', error.response?.data)
+    alert(`添加到购物车失败: ${error.response?.data?.message || error.message || '请稍后再试'}`)
+  }
 }
 </script>
 
 <style scoped>
+.stock-info {
+  margin-top: 8px;
+  font-size: 14px;
+  color: #666;
+}
+
 .product-rating {
   display: flex;
   align-items: center;

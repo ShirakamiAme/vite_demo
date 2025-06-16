@@ -4,7 +4,7 @@
     <div class="hero-content">
       <h1>发现自然之美 享受健康生活</h1>
       <p>探索我们精选的有机、环保产品，为您的日常生活带来自然纯净的体验。每一件商品都经过严格筛选，确保品质与可持续性。</p>
-      <a href="#" class="btn">探索商品</a>
+      <a href="/products" class="btn">探索商品</a>
     </div>
   </div>
 </template>

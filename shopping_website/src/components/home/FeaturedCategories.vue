@@ -22,20 +22,6 @@ const categories = [
     description: '新鲜采摘的有机水果、蔬菜和谷物',
     count: 128,
     image: 'https://images.unsplash.com/photo-1506806732259-39c2d0268443?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80'
-  },
-  {
-    id: 2,
-    name: '天然护肤品',
-    description: '植物萃取的护肤与身体护理产品',
-    count: 76,
-    image: 'https://images.unsplash.com/photo-1506806732259-39c2d0268443?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80'
-  },
-  {
-    id: 3,
-    name: '环保家居',
-    description: '可持续材料制作的家居用品',
-    count: 92,
-    image: 'https://images.unsplash.com/photo-1506806732259-39c2d0268443?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80'
   }
 ];
 </script>

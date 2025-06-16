@@ -14,7 +14,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import ProductCard from './ProductCard.vue'
+import ProductCard from '../common/ProductCard.vue'
 
 const products = ref([
   {
@@ -26,39 +26,6 @@ const products = ref([
     reviews: 142,
     originalPrice: '¥128.00',
     discountPrice: '¥98.00',
-    price: null
-  },
-  {
-    id: 2,
-    name: '竹制餐具套装',
-    badge: '新品',
-    image: 'https://images.unsplash.com/photo-1506806732259-39c2d0268443?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80',
-    rating: 4,
-    reviews: 87,
-    originalPrice: null,
-    discountPrice: null,
-    price: '¥128.00'
-  },
-  {
-    id: 3,
-    name: '燕麦植物奶',
-    badge: null,
-    image: 'https://images.unsplash.com/photo-1506806732259-39c2d0268443?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80',
-    rating: 5,
-    reviews: 204,
-    originalPrice: null,
-    discountPrice: null,
-    price: '¥45.00'
-  },
-  {
-    id: 4,
-    name: '天然芦荟胶',
-    badge: '限时优惠',
-    image: 'https://images.unsplash.com/photo-1506806732259-39c2d0268443?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80',
-    rating: 4.5,
-    reviews: 176,
-    originalPrice: '¥98.00',
-    discountPrice: '¥68.00',
     price: null
   }
 ]);
