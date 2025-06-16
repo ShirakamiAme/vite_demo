@@ -1,0 +1,25 @@
+{
+  "name": "shopping_backend",
+  "version": "1.0.0",
+  "description": "网站的后端",
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "seed": "node -e \"require('./src/seed/seedProducts')()\""
+  },
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "express": "^5.1.0",
+    "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.5",
+    "faker": "^5.5.3",
+    "jsonwebtoken": "^9.0.2"
+  }
+}
